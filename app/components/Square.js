@@ -2,8 +2,17 @@
 
 import React, { PropTypes, Component } from 'react';
 
+/**
+ * @class Square
+ * @extends React.Component
+ */
 class Square extends Component {
 
+  /**
+   * This is the click handler function of the tile
+   *
+   * @method onTileClick
+   */
   onTileClick() {
     if (this.props.isGameBeingPlayed && !this.props.tile.symbol) {
       this.props.tile.symbol = this.props.getCurrentSymbol();
@@ -11,6 +20,10 @@ class Square extends Component {
     }
   }
 
+  /**
+   * @method render
+   * @returns {JSX}
+   */
   render() {
     return (
       <div className='square' onClick={this.onTileClick.bind(this)}>{this.props.tile.symbol}</div>

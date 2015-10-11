@@ -4,8 +4,15 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import PlayerModal from './PlayerModal';
 
+/**
+ * @class GameHeader
+ * @extends React.Component
+ */
 class GameHeader extends React.Component {
 
+  /**
+   * @constructs GameHeader
+   */
   constructor() {
     super();
 
@@ -18,6 +25,13 @@ class GameHeader extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  /**
+   * This method sets the HTML while a game is in progress
+   * to show who's turn is next
+   *
+   * @method getInPlayHtml
+   * @returns {JSX}
+   */
   getInPlayHtml() {
     return (
       <div>
@@ -27,20 +41,41 @@ class GameHeader extends React.Component {
     );
   }
 
+  /**
+   * This method sets showModal state vairable to false and hence modal closes
+   *
+   * @method close
+   */
   close() {
     this.setState({showModal: false});
   }
 
+  /**
+   * This method sets showModal state vairable to true and hence modal opens
+   *
+   * @method open
+   */
   open() {
     this.setState({showModal: true});
   }
 
+  /**
+   * This method closes the modal and calls its start method to start the game eventually
+   *
+   * @method onSubmit
+   * @param {string} player1
+   * @param {string} player2
+   */
   onSubmit(player1, player2) {
     this.close();
     this.props.start(player1, player2);
   }
 
 
+  /**
+   * @method render
+   * @returns {JSX}
+   */
   render() {
     var children = this.props.isGameBeingPlayed ? this.getInPlayHtml(): '';
     return (

@@ -19651,8 +19651,17 @@
 
 	var _constants = __webpack_require__(404);
 
+	/**
+	 * @class Game
+	 * @extends React.Component
+	 */
+
 	var Game = (function (_React$Component) {
 	  _inherits(Game, _React$Component);
+
+	  /**
+	   * @constructs Game
+	   */
 
 	  function Game() {
 	    _classCallCheck(this, Game);
@@ -19667,19 +19676,28 @@
 	    this.getCurrentSymbol = this.getCurrentSymbol.bind(this);
 	  }
 
+	  /**
+	   * @method getState
+	   * @returns {{tiles: array, isGameBeingPlayed: boolean, moves: number, isX: boolean, showPlayerFormModal: boolean, winner: null}}
+	   */
+
 	  _createClass(Game, [{
 	    key: 'getState',
 	    value: function getState() {
 	      return {
 	        tiles: this.generateTiles(),
 	        isGameBeingPlayed: false,
-	        round: 0,
 	        moves: 0,
 	        isX: false,
 	        showPlayerFormModal: false,
 	        winner: null
 	      };
 	    }
+
+	    /**
+	     * @method generateTiles
+	     * @returns {Array}
+	     */
 	  }, {
 	    key: 'generateTiles',
 	    value: function generateTiles() {
@@ -19687,6 +19705,12 @@
 	        return { symbol: null, value: Math.pow(2, x) };
 	      });
 	    }
+
+	    /**
+	     * @method start
+	     * @param player1
+	     * @param player2
+	     */
 	  }, {
 	    key: 'start',
 	    value: function start(player1, player2) {
@@ -19694,16 +19718,31 @@
 	      this.playerWithSymbolX = new _Player2['default'](_constants.SYMBOL_X, player2);
 	      this.setState(Object.assign(this.getState(), { isGameBeingPlayed: true }));
 	    }
+
+	    /**
+	     * @method getCurrentSymbol
+	     * @returns {String}
+	     */
 	  }, {
 	    key: 'getCurrentSymbol',
 	    value: function getCurrentSymbol() {
 	      return this.state.isX ? _constants.SYMBOL_X : _constants.SYMBOL_O;
 	    }
+
+	    /**
+	     * @method getCurrentPlayer
+	     * @returns {Player}
+	     */
 	  }, {
 	    key: 'getCurrentPlayer',
 	    value: function getCurrentPlayer() {
 	      return this.state.isX ? this.playerWithSymbolX : this.playerWithSymbolO;
 	    }
+
+	    /**
+	     * @method tileClick
+	     * @param tile
+	     */
 	  }, {
 	    key: 'tileClick',
 	    value: function tileClick(tile) {
@@ -19716,6 +19755,10 @@
 	        this.setState({ isX: !this.state.isX });
 	      });
 	    }
+
+	    /**
+	     * @method checkWinConditions
+	     */
 	  }, {
 	    key: 'checkWinConditions',
 	    value: function checkWinConditions() {
@@ -19725,6 +19768,11 @@
 	        this.setState({ winner: 'Nobody', isGameBeingPlayed: false });
 	      }
 	    }
+
+	    /**
+	     * @method isCurrentPlayerWinner
+	     * @returns {boolean}
+	     */
 	  }, {
 	    key: 'isCurrentPlayerWinner',
 	    value: function isCurrentPlayerWinner() {
@@ -19734,6 +19782,11 @@
 	        return (x & _this.getCurrentPlayer().getScore()) === x;
 	      });
 	    }
+
+	    /**
+	     * @method render
+	     * @returns {JSX}
+	     */
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -19805,6 +19858,11 @@
 
 	var _Square2 = _interopRequireDefault(_Square);
 
+	/**
+	 * @class Board
+	 * @extends React.Component
+	 */
+
 	var Board = (function (_React$Component) {
 	  _inherits(Board, _React$Component);
 
@@ -19816,12 +19874,26 @@
 
 	  _createClass(Board, [{
 	    key: 'createTile',
+
+	    /**
+	     * This method is responsible to generate one tile in the game board
+	     *
+	     * @method createTile
+	     * @param {object} tile
+	     * @param {number} key
+	     * @returns {JSX}
+	     */
 	    value: function createTile(tile, key) {
 	      return _react2['default'].createElement(_Square2['default'], { tile: tile, key: key,
 	        getCurrentSymbol: this.props.getCurrentSymbol,
 	        isGameBeingPlayed: this.props.isGameBeingPlayed,
 	        tileClick: this.props.tileClick });
 	    }
+
+	    /**
+	     * @method render
+	     * @returns {JSX}
+	     */
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -19863,6 +19935,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	/**
+	 * @class Square
+	 * @extends React.Component
+	 */
+
 	var Square = (function (_Component) {
 	  _inherits(Square, _Component);
 
@@ -19874,12 +19951,23 @@
 
 	  _createClass(Square, [{
 	    key: 'onTileClick',
+
+	    /**
+	     * This is the click handler function of the tile
+	     *
+	     * @method onTileClick
+	     */
 	    value: function onTileClick() {
 	      if (this.props.isGameBeingPlayed && !this.props.tile.symbol) {
 	        this.props.tile.symbol = this.props.getCurrentSymbol();
 	        this.props.tileClick(this.props.tile);
 	      }
 	    }
+
+	    /**
+	     * @method render
+	     * @returns {JSX}
+	     */
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -19903,6 +19991,11 @@
 
 	'use strict';
 
+	/**
+	 * @class Player
+	 *
+	 * This class is used to model the player of the TicTacToe Game
+	 */
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
@@ -19912,6 +20005,13 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 	var Player = (function () {
+
+	  /**
+	   * @constructs Player
+	   * @param {string} symbol
+	   * @param {string} name
+	   */
+
 	  function Player(symbol, name) {
 	    _classCallCheck(this, Player);
 
@@ -19920,11 +20020,25 @@
 	    this.score = 0;
 	  }
 
+	  /**
+	   * Increase the score of the player with the given amount
+	   *
+	   * @method updateScore
+	   * @param {number} val
+	   */
+
 	  _createClass(Player, [{
 	    key: 'updateScore',
 	    value: function updateScore(val) {
 	      this.score += val;
 	    }
+
+	    /**
+	     * Returns the score of the player
+	     *
+	     * @method getScore
+	     * @returns {number}
+	     */
 	  }, {
 	    key: 'getScore',
 	    value: function getScore() {
@@ -19968,8 +20082,17 @@
 
 	var _PlayerModal2 = _interopRequireDefault(_PlayerModal);
 
+	/**
+	 * @class GameHeader
+	 * @extends React.Component
+	 */
+
 	var GameHeader = (function (_React$Component) {
 	  _inherits(GameHeader, _React$Component);
+
+	  /**
+	   * @constructs GameHeader
+	   */
 
 	  function GameHeader() {
 	    _classCallCheck(this, GameHeader);
@@ -19984,6 +20107,14 @@
 	    this.close = this.close.bind(this);
 	    this.onSubmit = this.onSubmit.bind(this);
 	  }
+
+	  /**
+	   * This method sets the HTML while a game is in progress
+	   * to show who's turn is next
+	   *
+	   * @method getInPlayHtml
+	   * @returns {JSX}
+	   */
 
 	  _createClass(GameHeader, [{
 	    key: 'getInPlayHtml',
@@ -20008,22 +20139,47 @@
 	        )
 	      );
 	    }
+
+	    /**
+	     * This method sets showModal state vairable to false and hence modal closes
+	     *
+	     * @method close
+	     */
 	  }, {
 	    key: 'close',
 	    value: function close() {
 	      this.setState({ showModal: false });
 	    }
+
+	    /**
+	     * This method sets showModal state vairable to true and hence modal opens
+	     *
+	     * @method open
+	     */
 	  }, {
 	    key: 'open',
 	    value: function open() {
 	      this.setState({ showModal: true });
 	    }
+
+	    /**
+	     * This method closes the modal and calls its start method to start the game eventually
+	     *
+	     * @method onSubmit
+	     * @param {string} player1
+	     * @param {string} player2
+	     */
 	  }, {
 	    key: 'onSubmit',
 	    value: function onSubmit(player1, player2) {
 	      this.close();
 	      this.props.start(player1, player2);
 	    }
+
+	    /**
+	     * @method render
+	     * @returns {JSX}
+	     */
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -36204,6 +36360,11 @@
 
 	var _reactBootstrap = __webpack_require__(163);
 
+	/**
+	 * @class PlayerModal
+	 * @extends React.Component
+	 */
+
 	var PlayerModal = (function (_React$Component) {
 	  _inherits(PlayerModal, _React$Component);
 
@@ -36215,10 +36376,22 @@
 
 	  _createClass(PlayerModal, [{
 	    key: 'onSubmit',
+
+	    /**
+	     * This is the handler function of the player form submit
+	     *
+	     * @method onSubmit
+	     * @param e
+	     */
 	    value: function onSubmit(e) {
 	      e.preventDefault();
 	      this.props.onSubmit(this.refs.player1.getValue(), this.refs.player2.getValue());
 	    }
+
+	    /**
+	     * @method render
+	     * @returns {JSX}
+	     */
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -36283,6 +36456,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	/**
+	 * @class LeaderBoard
+	 * @extends React.Component
+	 */
+
 	var LeaderBoard = (function (_React$Component) {
 	  _inherits(LeaderBoard, _React$Component);
 
@@ -36294,6 +36472,11 @@
 
 	  _createClass(LeaderBoard, [{
 	    key: 'getHtml',
+
+	    /**
+	     * @method getHtml
+	     * @returns {JSX}
+	     */
 	    value: function getHtml() {
 	      return this.props.winner ? _react2['default'].createElement(
 	        'div',
@@ -36306,6 +36489,11 @@
 	        )
 	      ) : '';
 	    }
+
+	    /**
+	     * @method render
+	     * @returns {JSX}
+	     */
 	  }, {
 	    key: 'render',
 	    value: function render() {
