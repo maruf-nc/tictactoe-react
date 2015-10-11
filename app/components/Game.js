@@ -1,11 +1,13 @@
 'use strict';
 
 import React from 'react';
+import _ from 'lodash';
 import Board from './Board';
 import Player from './Player';
 import GameHeader from './GameHeader';
 import LeaderBoard from './LeaderBoard';
 import {SYMBOL_O, SYMBOL_X} from '../constants';
+import GameService from '../GameService';
 
 /**
  * @class Game
@@ -23,6 +25,7 @@ export default class Game extends React.Component {
 
     this.tileClick = this.tileClick.bind(this);
     this.start = this.start.bind(this);
+    this._updateDB = this._updateDB.bind(this);
     this.getCurrentPlayer = this.getCurrentPlayer.bind(this);
     this.getCurrentSymbol = this.getCurrentSymbol.bind(this);
   }
@@ -48,6 +51,19 @@ export default class Game extends React.Component {
    */
   generateTiles() {
     return Array.from((new Array(9)).keys()).map(x => {return {symbol: null, value: Math.pow(2, x)}});
+  }
+
+  componentDidMount() {
+    var self = this;
+    GameService.query()
+      .then((games) => {
+        var pieData = _(games).groupBy('winner').map((i, k) => {return {label: k, value: Math.floor((i.length * 100) / games.length)};}).value();
+        self.setState({
+          timesPlayed: games.length,
+          pieData: pieData
+        });
+      })
+      .catch(console.error);
   }
 
   /**
@@ -97,10 +113,21 @@ export default class Game extends React.Component {
    */
   checkWinConditions() {
     if (this.isCurrentPlayerWinner()) {
-      this.setState({winner: this.getCurrentPlayer().name, isGameBeingPlayed: false});
+      this.setState({winner: this.getCurrentPlayer().name, winningSymbol: this.getCurrentPlayer().symbol, isGameBeingPlayed: false}, this._updateDB);
     } else if (this.state.moves > 8) {
-      this.setState({winner: 'Nobody', isGameBeingPlayed: false});
+      this.setState({winner: 'Nobody', winningSymbol: 'd', isGameBeingPlayed: false}, this._updateDB);
     }
+  }
+
+  _updateDB() {
+    var game = {
+      player1: this.playerWithSymbolO.name,
+      player2: this.playerWithSymbolX.name,
+      winner: this.state.winningSymbol
+    };
+    GameService.save(game)
+      .then(() => { this.setState({timesPlayed: this.state.timesPlayed + 1}); this.componentDidMount(); })
+      .catch(console.error);
   }
 
   /**
@@ -133,7 +160,7 @@ export default class Game extends React.Component {
           </div>
         </div>
         <div className="col-md-4">
-          <LeaderBoard winner={this.state.winner} />
+          <LeaderBoard pieData={this.state.pieData} timesPlayed={this.state.timesPlayed} winner={this.state.winner} />
         </div>
       </div>
     );

@@ -2,6 +2,7 @@
 
 jest.dontMock('../Board');
 jest.dontMock('../Square');
+jest.dontMock('lodash');
 jest.dontMock('../Player');
 jest.dontMock('../Game');
 
@@ -10,6 +11,10 @@ var ReactDOM = require('react-dom');
 var ReactTestUtils = require('react-addons-test-utils');
 
 var Game = require('../Game');
+var GameService = require('../../GameService');
+var mockPromise = {then: (cb) => {cb([]); return {catch: (cb) => {cb()}}}};
+GameService.query = jest.genMockFunction().mockReturnValue(mockPromise);
+GameService.save = jest.genMockFunction().mockReturnValue(mockPromise);
 
 describe('Game', function () {
 
