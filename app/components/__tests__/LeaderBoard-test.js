@@ -14,7 +14,7 @@ describe('LeaderBoard', function () {
   beforeEach(_render);
 
   it('should render properly', function () {
-    expect(leaderBoardNode.textContent).toEqual('james won');
+    expect(leaderBoardNode.textContent).toContain('james won');
   });
 
   function _render() {
