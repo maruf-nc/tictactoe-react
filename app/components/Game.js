@@ -37,9 +37,9 @@ export default class Game extends React.Component {
   }
 
   start(player1, player2) {
-    this.setState(Object.assign(this.getState(), {isGameBeingPlayed: true}));
     this.playerWithSymbolO = new Player(SYMBOL_O, player1);
     this.playerWithSymbolX = new Player(SYMBOL_X, player2);
+    this.setState(Object.assign(this.getState(), {isGameBeingPlayed: true}));
   }
 
   getCurrentSymbol() {

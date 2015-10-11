@@ -19690,9 +19690,9 @@
 	  }, {
 	    key: 'start',
 	    value: function start(player1, player2) {
-	      this.setState(Object.assign(this.getState(), { isGameBeingPlayed: true }));
 	      this.playerWithSymbolO = new _Player2['default'](_constants.SYMBOL_O, player1);
 	      this.playerWithSymbolX = new _Player2['default'](_constants.SYMBOL_X, player2);
+	      this.setState(Object.assign(this.getState(), { isGameBeingPlayed: true }));
 	    }
 	  }, {
 	    key: 'getCurrentSymbol',
