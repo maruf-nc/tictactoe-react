@@ -1,5 +1,7 @@
 #Tic Tac Toe
 
+[![Build Status](https://travis-ci.org/maruf-nc/tictactoe-react.svg?branch=master)](https://travis-ci.org/maruf-nc/tictactoe-react)
+
 ## Technologies used
  - NodeJS (> v4)
  - ReactJS
